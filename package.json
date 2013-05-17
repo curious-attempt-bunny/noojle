@@ -9,6 +9,7 @@
     "express": "3.0.0rc4",
     "ejs": "*",
     "stylus": "*",
-    "request": "~2.21.0"
+    "request": "~2.21.0",
+    "gzip-stack": "~1.0.0"
   }
 }
