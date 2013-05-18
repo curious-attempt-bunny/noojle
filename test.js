@@ -7,13 +7,13 @@ var esprima = require('esprima');
 var request = require('request');
 var Stream = require('stream');
 var tgz = {};
+var npmPackageLatest = require('npm-package-latest');
 
 var package = process.argv[2];
-var url = 'http://isaacs.iriscouch.com/registry/'+package;
-request(url, function(error, response, body) {
-  var doc = JSON.parse(body);
-  var versions = Object.keys(doc.versions);
-  var latest = doc.versions[versions[versions.length-1]];
+npmPackageLatest(package, function(error, latest) {
+  if (error) {
+    throw error;
+  }
   var tarballUrl = latest.dist.tarball;
   request(tarballUrl)
     .pipe(zlib.createGunzip())
