@@ -50,7 +50,7 @@ request(url, function(error, response, body) {
         var statement = statements[i];
          //console.log(JSON.stringify(statement, null, 2));
  
-        if ((statement.type == 'ExpressionStatement' && statement.expression.type == 'AssignmentExpression') || statement.type == 'FunctionDeclaration') {
+        if ((statement.type == 'ExpressionStatement' && statement.expression.type == 'AssignmentExpression') || statement.type == 'FunctionDeclaration' || statement.type == 'VariableDeclaration') {
           //expressionStream.emit('data', statement.expression);
           //console.log(JSON.stringify(statement, null, 2));
           minimal += main.substring(statement.range[0], statement.range[1])+";\n";
@@ -58,8 +58,8 @@ request(url, function(error, response, body) {
       }
 
       expression = 
-        //"eval = function() { return null; };\n"+
-        //"require = function() { return null; };\n"+
+        "eval = function() { return null; };\n"+
+        "require = function() { return {}; };\n"+
         minimal+"\n"+
         "[typeof(module.exports), Object.keys(module.exports), module.exports.toString()]"
       //console.log(expression);
