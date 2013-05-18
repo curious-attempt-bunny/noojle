@@ -33,20 +33,23 @@ request(url, function(error, response, body) {
 
       var packageJson = JSON.parse(tgz['package/package.json']);
       //console.dir(packageJson);
-      var mainJs = path.join('package', packageJson.main || 'index.js')
+      var mainPath = packageJson.main || 'index.js'; 
+      var mainJs = path.join('package', mainPath); 
       if (!/\.js$/.test(mainJs)) {
         mainJs += ".js"
       }
 
       var minimal = "";
 
-      var main = tgz[mainJs];
+      var main = tgz[mainJs] || tgz['package/index.js'];
       //console.log(main);
       var mainAst = esprima.parse(main, {range: true});
       //console.log(JSON.stringify(mainAst, null, 2));
       var statements = mainAst.body;
       for(var i=0; i<statements.length; i++) {
         var statement = statements[i];
+         //console.log(JSON.stringify(statement, null, 2));
+ 
         if ((statement.type == 'ExpressionStatement' && statement.expression.type == 'AssignmentExpression') || statement.type == 'FunctionDeclaration') {
           //expressionStream.emit('data', statement.expression);
           //console.log(JSON.stringify(statement, null, 2));
@@ -54,7 +57,11 @@ request(url, function(error, response, body) {
         }
       }
 
-      expression = "eval = null; require = function() { return null; }; "+minimal+"[typeof(module.exports), Object.keys(module.exports), module.exports.toString()]"
+      expression = 
+        //"eval = function() { return null; };\n"+
+        //"require = function() { return null; };\n"+
+        minimal+"\n"+
+        "[typeof(module.exports), Object.keys(module.exports), module.exports.toString()]"
       //console.log(expression);
       var results = eval(expression);
       var type = results[0];
@@ -64,6 +71,9 @@ request(url, function(error, response, body) {
       var isValid = type == 'function' && (keys.length == 0|| keys.length == 1 && keys[0] == package);
       //console.log("isValid", isValid);
       if (isValid) {
+        if (/^function \(/.test(code)) {  
+          code = "function foo" + code.substring("function".length);
+        }
         var functionAst = esprima.parse(code);
         var args = functionAst.body[0].params.map(function(param) { return param.name });
         console.log(package+"("+args.join(", ")+")");
