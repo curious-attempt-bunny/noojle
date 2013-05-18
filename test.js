@@ -59,7 +59,7 @@ request(url, function(error, response, body) {
 
       expression = 
         "eval = function() { return null; };\n"+
-        "require = function() { return {}; };\n"+
+        "require = function() { return function() {}; };\n"+
         minimal+"\n"+
         "[typeof(module.exports), Object.keys(module.exports), module.exports.toString()]"
       //console.log(expression);
