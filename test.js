@@ -24,5 +24,10 @@ fs.createReadStream(filename)
 
     var package = JSON.parse(tgz['package/package.json']);
     console.dir(package);
-    //var main = tgz[path. 
+    var mainJs = path.join('package', package.main || 'index.js')
+    if (!/\.js$/.test(mainJs)) {
+      mainJs += ".js"
+    }
+    var main = tgz[mainJs];
+    console.log(main);
   });
