@@ -1,19 +1,23 @@
 {
-  "name": "application-name",
+  "name": "noojle",
+  "description": "npm package api search",
   "version": "0.0.1",
-  "private": true,
+  "repository": {
+    "url": "git://github.com/curious-attempt-bunny/noojle.git"
+  },
+  "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "start": "node app.js",
+    "test": "tap test/*.js"
   },
   "dependencies": {
-    "express": "3.0.0rc4",
-    "ejs": "*",
-    "stylus": "*",
-    "request": "~2.21.0",
-    "gzip-stack": "~1.0.0",
-    "fstream": "~0.1.22",
-    "tar": "~0.1.17",
-    "esprima": "~1.0.3",
-    "npm-package-latest": "0.0.1"
-  }
+    "express": "3.x",
+    "noojle-parser": "~0.1.1"
+  },
+  "devDependencies": {
+    "tap": "~0.4.3",
+    "tape": "~1.0.2"
+  },
+  "author": "Merlyn Albery-Speyer <curious.attempt.bunny@gmail.com> (curiousattemptbunny.com)",
+  "license": "MIT"
 }
