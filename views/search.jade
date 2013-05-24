@@ -1,0 +1,36 @@
+doctype 5
+html(lang="en")
+  head
+    style(type="text/css")
+      .sidebar {
+        float: left;
+        width: 150px;
+      .main
+        float: left;
+        width 750px;
+      .header
+        height: 4em;
+    script(type="text/javascript")
+      window.onload = function() {
+        document.getElementById('q').onkeypress = function (event) {
+          if (event.charCode == 13) {
+            var root = window.location.href;
+            if (root.indexOf("?")) {
+              root = root.substring(0, root.indexOf("?"));
+            }
+            window.location.href = root+"?q="+escape(event.target.value)
+          }
+        };
+      };
+  body
+    .sidebar
+      h1 Noojle
+    .main
+      .header
+        input#q(type="text", placeholder="search term")
+      .content
+        ul
+          each result in results
+            li
+              p.name= result.name
+              p.signature= result.signature

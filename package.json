@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "express": "3.x",
-    "noojle-parser": "~0.1.1"
+    "noojle-parser": "~0.1.1",
+    "jade": "~0.30.0"
   },
   "devDependencies": {
     "tap": "~0.4.3",
